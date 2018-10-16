@@ -4,7 +4,7 @@ var IPs = [];
 function show(div) {
     var element = document.getElementById(div);
     element.classList.toggle("showContent");
-    document.getElementById('CP2').style.height = $('#CP1').outerHeight();
+   
 }
 
 function textSwapper(text, tag) {
@@ -15,15 +15,6 @@ function textSwapper(text, tag) {
         x[i].textContent = text;
     }
 }
-
-var getIPAddress = function () {
-    $.getJSON("https://jsonip.com?callback=?", function (data) {
-        if (!IPs.includes(data.ip)) {
-            IPs.push(data.ip);
-            console.log(IPs);
-        }
-    });
-};
 
 window.onload = function () {
     input = "";
@@ -43,20 +34,3 @@ window.onload = function () {
 
 
 };
-var right = document.getElementById('CP2').style.height;
-var left = document.getElementById('CP1').style.height;
-
-$(document).keypress(function (event) {
-    input = input.concat(String.fromCharCode(event.which));
-    if (input == "a") {
-        document.getElementById('CP2').style.height = $('#CP1').outerHeight();
-        console.log($('#CP1').height());
-        console.log($('#CP2').height());
-        input = "";
-    }
-});
-
-$(window).resize(function () {
-    document.getElementById('CP2').style.height = $('#CP1').outerHeight();
-});
-document.getElementById('CP2').style.height = $('#CP1').height();
