@@ -20,7 +20,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
 
 import java.util.ArrayList;
 
-public class ImageRec2 extends LinearOpMode {
+public class ImageRec extends LinearOpMode {
     public void find(VuforiaTrackable trackable) {
         RelicRecoveryVuMark vuMark = RelicRecoveryVuMark.from(trackable);
         if (vuMark != RelicRecoveryVuMark.UNKNOWN) {

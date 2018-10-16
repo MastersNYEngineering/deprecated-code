@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.tests;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotorController;
@@ -80,8 +80,8 @@ public class MotorTest extends OpMode {
         // right_power = -gamepad1.right_stick_y ;
 
         // Send calculated power to wheels
-        left_wheel.setPower(left_power);
-        right_wheel.setPower(right_power);
+        left_wheel.setPower(left_power * 100);
+        right_wheel.setPower(right_power * 100);
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
