@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -16,7 +17,8 @@ public class OreScanner extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     
     private ColorSensor color_sensor;
-
+    private Telemetry telemetry;
+    
     private void print_colors() {
         telemetry.addData("Color Sensor", "Red: " + color_sensor.red());
         telemetry.addData("Color Sensor", "Green: " + color_sensor.green());
@@ -62,10 +64,12 @@ public class OreScanner extends OpMode {
     
     @Override
     public void loop() {
-        
-        float red = color_sensor.red();
-        float green = color_sensor.green();
-        float blue = color_sensor.blue();
+        RGB current_rgb = new RGB(
+            color_sensor.red(),
+            color_sensor.green(),
+            color_sensor.blue()
+        );
+
         float alpha = color_sensor.alpha();
         String argb = Float.toString(color_sensor.argb());
         
@@ -81,6 +85,7 @@ public class OreScanner extends OpMode {
         float upper_blue = 300;
 
         boolean is_gold = scan_color(
+            current_rgb,
             lower_red,
             upper_red,
             lower_green,
@@ -105,6 +110,7 @@ public class OreScanner extends OpMode {
         float _upper_blue = 300;
 
         boolean is_silver = scan_color(
+            current_rgb,
             lower_red,
             upper_red,
             lower_green,
@@ -113,7 +119,7 @@ public class OreScanner extends OpMode {
             upper_blue
         );
 
-        if (is_white) {
+        if (is_silver) {
             telemetry.addData("\nSilver Detected\n");
         }
 
