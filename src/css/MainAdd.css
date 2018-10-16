@@ -412,3 +412,10 @@
     color: #F8D14C;
     float: right;
 }
+
+.whiter {
+    box-shadow: 1185px 0px 0px 0px white, -1185px 0px 0px 0px white, 734px 0px 0px 0px white, -734px 0px 0px 0px white, 20px 0px 0px 0px white, -20px 0px 0px 0px;
+    margin-bottom: 3.25rem;
+
+    background-color: white;
+}

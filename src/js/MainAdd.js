@@ -4,7 +4,7 @@ var IPs = [];
 function show(div) {
     var element = document.getElementById(div);
     element.classList.toggle("showContent");
-   
+
 }
 
 function textSwapper(text, tag) {
