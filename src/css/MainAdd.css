@@ -419,3 +419,19 @@
 
     background-color: white;
 }
+
+.small_text {
+    text-decoration: none;
+    line-height: 1.2;
+    margin: .5em 0 .5em 0;
+    text-transform: uppercase;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight: bold;
+    font-size: 22px;
+    display: inline;
+    margin-right: 6px;
+}
+
+.small_text:hover {
+    text-decoration: underline;
+}
