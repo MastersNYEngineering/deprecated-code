@@ -110,13 +110,13 @@ public class OreScanner extends OpMode {
         float _upper_blue = 300;
 
         boolean is_silver = scan_color(
-            current_rgb,
-            lower_red,
-            upper_red,
-            lower_green,
-            upper_green,
-            lower_blue,
-            upper_blue
+            _current_rgb,
+            _lower_red,
+            _upper_red,
+            _lower_green,
+            _upper_green,
+            _lower_blue,
+            _upper_blue
         );
 
         if (is_silver) {
@@ -125,7 +125,7 @@ public class OreScanner extends OpMode {
 
         // ----- END COLORS ----- 
 
-        print_colors();
+        // print_colors();
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
