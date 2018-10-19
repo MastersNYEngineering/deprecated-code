@@ -435,3 +435,17 @@
 .small_text:hover {
     text-decoration: underline;
 }
+
+.centerer {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.downloadable {
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.downloadable:hover {
+    text-decoration: underline;
+}
