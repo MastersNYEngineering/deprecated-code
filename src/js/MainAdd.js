@@ -1,5 +1,4 @@
 var name;
-var IPs = [];
 
 function show(div) {
     var element = document.getElementById(div);
