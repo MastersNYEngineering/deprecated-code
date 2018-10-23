@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.util.Range;
 import java.lang.Math;
 
 @TeleOp(name="Main: Triangle Drive", group="Iterative Opmode")
-public class Main extends OpMode {
+public class TriangleDrive extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor w0 = null;
     private DcMotor w1 = null;
@@ -44,30 +44,30 @@ public class Main extends OpMode {
 
     @Override
     public void loop() {
-        float x_joy = gamepad1.left_stick_x;
-        float y_joy = gamepad1.left_stick_y;
+        double x_joy = gamepad1.left_stick_x;
+        double y_joy = gamepad1.left_stick_y;
 
-        float phi_joy = Math.atan2(y_joy, x_joy);
+        double phi_joy = Math.atan2(y_joy, x_joy);
         
-        float x_joy_sq = Math.pow(x_joy, 2);
-        float y_joy_sq = Math.pow(y_joy, 2);
+        double x_joy_sq = Math.pow(x_joy, 2);
+        double y_joy_sq = Math.pow(y_joy, 2);
         
-        float r_joy = Math.sqrt(x_joy_sq + y_joy_sq);
+        double r_joy = Math.sqrt(x_joy_sq + y_joy_sq);
 
-        float max_speed = 1000;
-        float speed = max_speed * r_joy;
+        double max_speed = 1000;
+        double speed = max_speed * r_joy;
 
-        float alpha_1 = Math.PI / 2;
-        float alpha_2 = 7 * Math.PI / 6;
-        float alpha_3 = 11 * Math.PI / 6;
+        double alpha_1 = Math.PI / 2;
+        double alpha_2 = 7 * Math.PI / 6;
+        double alpha_3 = 11 * Math.PI / 6;
 
-        float theta_1 = alpha_1 - phi_joy;
-        float theta_2 = alpha_2 - phi_joy;
-        float theta_3 = alpha_3 - phi_joy;
+        double theta_1 = alpha_1 - phi_joy;
+        double theta_2 = alpha_2 - phi_joy;
+        double theta_3 = alpha_3 - phi_joy;
 
-        float w0_power = speed * Math.sin(theta_1);
-        float w1_power = speed * Math.sin(theta_2);
-        float w2_power = speed * Math.sin(theta_3);
+        double w0_power = speed * Math.sin(theta_1);
+        double w1_power = speed * Math.sin(theta_2);
+        double w2_power = speed * Math.sin(theta_3);
 
         // w0.setPower(w0_power);
         // w1.setPower(w1_power);
