@@ -10,8 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="OpMode: Ore Scanner", group="Iterative Opmode")
-
+@TeleOp(name="Main: Ore Scanner", group="Iterative Opmode")
 public class OreScanner extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();

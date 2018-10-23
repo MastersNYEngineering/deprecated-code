@@ -8,8 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Test: Motors", group="Iterative Opmode")
-
+@TeleOp(name="Main: Drive Test", group="Iterative Opmode")
 public class Main extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor w0 = null;
@@ -28,7 +27,7 @@ public class Main extends OpMode {
 
         w0.setDirection(DcMotor.Direction.FORWARD);
         w1.setDirection(DcMotor.Direction.FORWARD);
-        w2.setDirection(DcMotor.Direction.FORWARD);
+        w2.setDirection(DcMotor.Direction.REVERSE);
         
         telemetry.addData("Init", "Motors");
     }
@@ -55,10 +54,10 @@ public class Main extends OpMode {
         w2_power = Range.clip(drive - turn, -1.0, 1.0);
 
         w0.setPower(w0_power * 100);
-        w2.setPower(w1_power * 100);
-        w0.setPower(w0_power * 100);
+        w1.setPower(w1_power * 100);
+        w2.setPower(w2_power * 100);
 
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
+        telemetry.addData("Run Time", runtime.toString());
     }
 
     @Override
