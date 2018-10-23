@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
+import java.lang.Math;
 
 @TeleOp(name="Main: Drive Test", group="Iterative Opmode")
 public class Main extends OpMode {
@@ -53,10 +54,11 @@ public class Main extends OpMode {
         w1_power = Range.clip(drive + turn, -1.0, 1.0);
         w2_power = Range.clip(drive - turn, -1.0, 1.0);
 
-        w0.setPower(w0_power * 100);
-        w1.setPower(w1_power * 100);
-        w2.setPower(w2_power * 100);
+        w0.setPower(w0_power);
+        w1.setPower(w1_power);
+        w2.setPower(w2_power);
 
+        telemetry.addData("sin(Pi/2)", Math.sin(Math.PI / 2));
         telemetry.addData("Run Time", runtime.toString());
     }
 
