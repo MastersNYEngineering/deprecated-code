@@ -54,7 +54,7 @@ public class TriangleDrive extends OpMode {
         
         double r_joy = Math.sqrt(x_joy_sq + y_joy_sq);
 
-        double max_speed = 1000;
+        double max_speed = 1;
         double speed = max_speed * r_joy;
 
         double alpha_1 = Math.PI / 2;
@@ -68,25 +68,14 @@ public class TriangleDrive extends OpMode {
         double w0_power = speed * Math.sin(theta_1);
         double w1_power = speed * Math.sin(theta_2);
         double w2_power = speed * Math.sin(theta_3);
+        
+        telemetry.addData("w0_power", w0_power);
+        telemetry.addData("w1_power", w1_power);
+        telemetry.addData("w2_power", w2_power);
 
-        // w0.setPower(w0_power);
-        // w1.setPower(w1_power);
-        // w2.setPower(w2_power);
-
-
-        // double w0_power;
-        // double w1_power;
-        // double w2_power;
-
-        // double drive = gamepad1.right_stick_x;
-        // double turn = -gamepad1.left_stick_x;
-        // w0_power = Range.clip(drive + turn, -1.0, 1.0);
-        // w1_power = Range.clip(drive + turn, -1.0, 1.0);
-        // w2_power = Range.clip(drive + turn, -1.0, 1.0);
-
-        // w0.setPower(w0_power * 100);
-        // w1.setPower(w1_power * 100);
-        // w2.setPower(w2_power * 100);
+        w0.setPower(-w0_power);
+        w1.setPower(-w1_power);
+        w2.setPower(-w2_power);
 
         telemetry.addData("Run Time", runtime.toString());
     }
