@@ -15,6 +15,25 @@ public class TriangleDrive extends OpMode {
     private DcMotor w0 = null;
     private DcMotor w1 = null;
     private DcMotor w2 = null;
+    private double max_speed;
+
+    @Override
+    public void init() {
+        max_speed = 1;
+        w0 = hardwareMap.get(DcMotor.class, "w0");
+        w1 = hardwareMap.get(DcMotor.class, "w1");
+        w2 = hardwareMap.get(DcMotor.class, "w2");
+
+        w0.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        w1.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        w2.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+
+        w0.setDirection(DcMotor.Direction.FORWARD);
+        w1.setDirection(DcMotor.Direction.FORWARD);
+        w2.setDirection(DcMotor.Direction.FORWARD);
+        
+        telemetry.addData("Init", "Motors");
+    }
 
     void move() {
         double x_left_joy = gamepad1.left_stick_x;
@@ -27,7 +46,6 @@ public class TriangleDrive extends OpMode {
         
         double r_joy = Math.sqrt(x_left_joy_sq + y_left_joy_sq);
         
-        double max_speed = 1;
         double speed = max_speed * r_joy;
         
         double alpha_1 = Math.PI / 2;
@@ -51,24 +69,15 @@ public class TriangleDrive extends OpMode {
         w2.setPower(-w2_power);
     }
 
-    
-
+    void turn() {
+        double x_right_joy = gamepad1.right_stick_x;
+        // double y_right_joy = gamepad1.right_stick_y;
         
-    @Override
-    public void init() {
-        w0 = hardwareMap.get(DcMotor.class, "w0");
-        w1 = hardwareMap.get(DcMotor.class, "w1");
-        w2 = hardwareMap.get(DcMotor.class, "w2");
+        double speed = Range.clip(x_right_joy, -1.0, 1.0) * max_speed;
 
-        w0.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-        w1.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-        w2.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-
-        w0.setDirection(DcMotor.Direction.FORWARD);
-        w1.setDirection(DcMotor.Direction.FORWARD);
-        w2.setDirection(DcMotor.Direction.FORWARD);
-        
-        telemetry.addData("Init", "Motors");
+        w0.setPower(speed);
+        w1.setPower(speed);
+        w2.setPower(speed);
     }
 
     @Override
