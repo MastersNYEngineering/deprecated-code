@@ -20,6 +20,8 @@ public class TriangleDrive extends OpMode {
     @Override
     public void init() {
         max_speed = 1;
+        // max_speed = 0.125;
+
         w0 = hardwareMap.get(DcMotor.class, "w0");
         w1 = hardwareMap.get(DcMotor.class, "w1");
         w2 = hardwareMap.get(DcMotor.class, "w2");
