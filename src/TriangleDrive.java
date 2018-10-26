@@ -24,24 +24,15 @@ public class TriangleDrive extends OpMode {
         m.setDirection(DcMotor.Direction.FORWARD);
         return m;
     }
+
     @Override
     public void init() {
-        max_speed = 1;
+        // max_speed = 1;
+        max_speed = 0.5;
         // max_speed = 0.125;
-
-        w0 = hardwareMap.get(DcMotor.class, "w0");
-        w1 = hardwareMap.get(DcMotor.class, "w1");
-        w2 = hardwareMap.get(DcMotor.class, "w2");
-
-        w0.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-        w1.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-        w2.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-
-        w0.setDirection(DcMotor.Direction.FORWARD);
-        w1.setDirection(DcMotor.Direction.FORWARD);
-        w2.setDirection(DcMotor.Direction.FORWARD);
-        
-        telemetry.addData("Init", "Motors");
+        init_motor("w0");
+        init_motor("w1");
+        init_motor("w2");
     }
 
     double[] move() {
