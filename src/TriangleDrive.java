@@ -17,6 +17,13 @@ public class TriangleDrive extends OpMode {
     private DcMotor w2 = null;
     private double max_speed;
 
+    public DcMotor init_motor(String id) {
+        DcMotor m = null;
+        m = hardwareMap.get(DcMotor.class, id);
+        m.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
+        m.setDirection(DcMotor.Direction.FORWARD);
+        return m;
+    }
     @Override
     public void init() {
         max_speed = 1;
@@ -66,10 +73,6 @@ public class TriangleDrive extends OpMode {
         telemetry.addData("w1_power", w1_power);
         telemetry.addData("w2_power", w2_power);
         
-        // w0.setPower(-w0_power);
-        // w1.setPower(-w1_power);
-        // w2.setPower(-w2_power);
-        
         double[] speeds = {
             w0_power,
             w1_power,
@@ -81,13 +84,8 @@ public class TriangleDrive extends OpMode {
 
     double turn() {
         double x_right_joy = gamepad1.right_stick_x;
-        // double y_right_joy = gamepad1.right_stick_y;
-        
         double speed = Range.clip(x_right_joy, -1.0, 1.0) * max_speed;
 
-        // w0.setPower(speed);
-        // w1.setPower(speed);
-        // w2.setPower(speed);
         return speed;
     }
 
