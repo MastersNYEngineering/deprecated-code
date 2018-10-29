@@ -1147,23 +1147,37 @@
 						<div class="page-block style-48854 clearfix in-view bottom-of-page center-of-page has-been-viewed center-has-been-viewed"
 							data-cid="1" id="content_1565979">
 							<div class="content text">
-								<h2>Structure</h2>
+								<h2>Workshop Downloads</h2>
 								<div class="content-wrap">
-									Masters’ Engineering and Robotics Team is a part of the Zetetics Academic Enrichment Program. Zetetics
-									includes:
-									<li>Engineering and Robotics teams for both upper and middle school students,</li>
-									<li>Quiz Bowl teams for both upper and middle school students, </li>
-									<li>Applied Mathematics teams in the upper school, </li>
-									<li>A Cybersecurity Team in the upper school,</li>
-									<li>A History Bowl team for both upper and middle school students, and </li>
-									<li>A Coding Team in the upper school. </li>
-									Depending upon the number of students involved in any given year, the Masters Engineering Team can comprise
-									more than one competition Squad. The Squad Leader with the Coaches work together to create working groups
-									within each Squad to ensure that all tasks are addressed and work is distributed equally. A typical Squad
-									includes: people to manage Engineering Compliance, Coding and Control, Modeling and Fabrication, Media,
-									Marketing and Promotions, Outreach, Rules and Compliance, Content Management, Electronics, Research and
-									Reconnaissance, and Designers. There is also one Analyst and Webmaster for the entire team.
-									The Team competes in three regular-season competitions per year.
+									<h3>PowerPoints</h3>
+									<ul>
+										<li>Holonomic Mobility</li>
+										<li>The Physics Behind Motors</li>
+										<li></li>
+									</ul>
+									<h3>Checklists</h3>
+
+									<h3>Pictures</h3>
+									<ul id="workshop-pictures">
+									</ul>
+									
+									<style>
+										.workshop-pic {
+											height: 270px;
+											width: 480px;
+											border: 2px solid black;
+										}
+									</style>
+									
+									<script>
+										var pictures = document.getElementById("workshop-pictures"); 
+										for (var i = 0; i < 36; i++) {
+											var li = document.createElement("li");
+											li.createElement("img");
+											li.className = "workshop-pic";
+											li.src = "./media/"
+										}
+										</script>
 								</div>
 							</div>
 						</div>
