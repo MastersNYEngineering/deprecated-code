@@ -24,7 +24,7 @@ $(window).resize(function () {
     document.getElementById('CP2').style.height = $('#CP1').outerHeight();
 });
 
-$( document ).ready(function() {
+$(document).ready(function() {
     document.getElementById('CP2').style.height = $('#CP1').height();
 
 });
