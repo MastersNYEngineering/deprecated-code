@@ -129,6 +129,22 @@ public class TriangleDrive extends OpMode {
         }
     }
 
+    /*
+        For driving, I need to find out a way to do this. Maybe i wire the motor into the servo port but deal with it 
+        as if its a dcmotor class
+    */
+    
+    void drive_lift() {
+        if (gamepad1.RB) {
+            lift_0.setPosition(1);
+            lift_1.setPosition(1);
+        }
+        if (gamepad1.LB) {
+            lift_0.setPosition(-1);
+            lift_1.setPosition(-1);
+        }
+    }
+
     @Override
     public void init_loop() {
     }
@@ -148,8 +164,9 @@ public class TriangleDrive extends OpMode {
         // w2.setPower(move[2] + turn);
 
         deploy_marker();
-        telemetry.addData("SERVO", deploy_servo.getPosition());
-
+        rotate_lift();
+        drive_lift();
+        // telemetry.addData("SERVO", deploy_servo.getPosition());
         telemetry.addData("Run Time", runtime.toString());
     }
 
