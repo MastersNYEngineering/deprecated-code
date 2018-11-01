@@ -33,13 +33,14 @@ public class TriangleDrive extends OpMode {
         DcMotor m = null;
         m = hardwareMap.get(DcMotor.class, id);
         m.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
-        m.setDirection(DcMotor.Direction.FORWARD);
+        m.setDirection(DcMotor.Direction.REVERSE);
         return m;
     }
 
     @Override
     public void init() {
         deploy_servo = hardwareMap.get(Servo.class, "marker");
+        deploy_servo.setDirection(Servo.Direction.FORWARD);
         
         // max_speed = 1;
         max_speed = 0.5;
@@ -95,11 +96,12 @@ public class TriangleDrive extends OpMode {
     }
 
     void deploy_marker() {
+        double current_position = deploy_servo.getPosition();
         if (gamepad1.b) {
-            deploy_servo.setPosition(0.5);
-            telemetry.addData("BUTTON B", "PRESSED");
-        } else {
-            
+            deploy_servo.setPosition(1);
+        }
+        if (gamepad1.a) {
+            deploy_servo.setPosition(-1);
         }
     }
 
