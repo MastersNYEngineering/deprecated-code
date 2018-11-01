@@ -25,6 +25,7 @@ public class TriangleDrive extends OpMode {
     private DcMotor w0 = null;
     private DcMotor w1 = null;
     private DcMotor w2 = null;
+    private Servo deploy_servo = null;
     private double max_speed;
 
     public DcMotor init_motor(String id) {
@@ -37,6 +38,8 @@ public class TriangleDrive extends OpMode {
 
     @Override
     public void init() {
+        deploy_servo = hardwareMap.get(Servo.class, "deploy");
+        
         // max_speed = 1;
         max_speed = 0.5;
         // max_speed = 0.125;
@@ -90,12 +93,20 @@ public class TriangleDrive extends OpMode {
         return speed;
     }
 
+    void deploy_marker() {
+        if (gamepad1.a) {
+            deploy_servo.setPosition(100);
+        }
+    }
+
+
     @Override
     public void init_loop() {
     }
 
     @Override
     public void start() {
+        deploy_servo.setPosition(0);
         runtime.reset();
     }
 
@@ -106,6 +117,8 @@ public class TriangleDrive extends OpMode {
         w0.setPower(move[0] + turn);
         w1.setPower(move[1] + turn);
         w2.setPower(move[2] + turn);
+
+        deploy_marker();
 
         telemetry.addData("Run Time", runtime.toString());
     }
