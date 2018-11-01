@@ -26,10 +26,15 @@ public class TriangleDrive extends OpMode {
     private DcMotor w0 = null;
     private DcMotor w1 = null;
     private DcMotor w2 = null;
+    
+    private DcMotor lift_rotate = null;
+    private Servo lift_0 = null;
+    private Servo lift_1 = null;
+    
     private Servo deploy_servo = null;
     private double max_speed;
 
-    public DcMotor init_motor(String id) {
+    private DcMotor init_motor(String id) {
         DcMotor m = null;
         m = hardwareMap.get(DcMotor.class, id);
         m.setMode(DcMotor.RunMode.RUN_USING_ENCODERS);
@@ -37,17 +42,27 @@ public class TriangleDrive extends OpMode {
         return m;
     }
 
+    private Servo init_servo(String id) {
+        Servo s = null;
+        s = hardwareMap.get(Servo.class, id);
+        s.setDirection(Servo.Direction.FORWARD);
+        return s;
+    }
+
     @Override
     public void init() {
-        deploy_servo = hardwareMap.get(Servo.class, "marker");
-        deploy_servo.setDirection(Servo.Direction.FORWARD);
-        
         // max_speed = 1;
         max_speed = 0.5;
         // max_speed = 0.125;
+
         // init_motor("w0");
         // init_motor("w1");
         // init_motor("w2");
+
+        init_servo("marker");
+        init_motor("lift_rotate");
+        init_servo("lift_0");
+        init_servo("lift_1");
     }
 
     double[] move() {
@@ -105,6 +120,14 @@ public class TriangleDrive extends OpMode {
         }
     }
 
+    void rotate_lift() {
+        if (gamepad1.RT) {
+            lift_rotate.setPower(10);
+        }
+        if (gamepad1.LT) {
+            lift_rotate.setPower(-10);
+        }
+    }
 
     @Override
     public void init_loop() {
