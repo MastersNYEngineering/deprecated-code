@@ -11,6 +11,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -38,14 +39,14 @@ public class TriangleDrive extends OpMode {
 
     @Override
     public void init() {
-        deploy_servo = hardwareMap.get(Servo.class, "deploy");
+        deploy_servo = hardwareMap.get(Servo.class, "marker");
         
         // max_speed = 1;
         max_speed = 0.5;
         // max_speed = 0.125;
-        init_motor("w0");
-        init_motor("w1");
-        init_motor("w2");
+        // init_motor("w0");
+        // init_motor("w1");
+        // init_motor("w2");
     }
 
     double[] move() {
@@ -94,8 +95,11 @@ public class TriangleDrive extends OpMode {
     }
 
     void deploy_marker() {
-        if (gamepad1.a) {
-            deploy_servo.setPosition(100);
+        if (gamepad1.b) {
+            deploy_servo.setPosition(0.5);
+            telemetry.addData("BUTTON B", "PRESSED");
+        } else {
+            
         }
     }
 
@@ -114,11 +118,12 @@ public class TriangleDrive extends OpMode {
     public void loop() {
         double[] move = move();
         double turn = turn();
-        w0.setPower(move[0] + turn);
-        w1.setPower(move[1] + turn);
-        w2.setPower(move[2] + turn);
+        // w0.setPower(move[0] + turn);
+        // w1.setPower(move[1] + turn);
+        // w2.setPower(move[2] + turn);
 
         deploy_marker();
+        telemetry.addData("SERVO", deploy_servo.getPosition());
 
         telemetry.addData("Run Time", runtime.toString());
     }
