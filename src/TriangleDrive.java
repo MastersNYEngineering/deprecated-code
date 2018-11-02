@@ -32,6 +32,8 @@ public class TriangleDrive extends OpMode {
     private Servo lift_1 = null;
     
     private Servo deploy_servo = null;
+    private Servo claw = null;
+    
     private double max_speed;
 
     private DcMotor init_motor(String id) {
@@ -59,10 +61,11 @@ public class TriangleDrive extends OpMode {
         // init_motor("w1");
         // init_motor("w2");
 
-        init_servo("marker");
-        init_motor("lift_rotate");
-        init_servo("lift_0");
-        init_servo("lift_1");
+        deploy_servo = init_servo("marker");
+        lift_rotate = init_motor("lift_rotate");
+        claw = init_servo("claw");
+        // init_servo("lift_0");
+        // init_servo("lift_1");
     }
 
     double[] move() {
@@ -121,11 +124,32 @@ public class TriangleDrive extends OpMode {
     }
 
     void rotate_lift() {
-        if (gamepad1.RT) {
-            lift_rotate.setPower(10);
+        // telemetry.addData("pressed", gamepad1.pressed(gamepad1.right_trigger));
+        telemetry.addData(" direct", gamepad1.right_trigger);
+        
+        double right = gamepad1.right_trigger;
+        double left = gamepad1.left_trigger;
+        if (right > 0) {
+            lift_rotate.setPower(right);
+        } else {
+            lift_rotate.setPower(0);
         }
-        if (gamepad1.LT) {
-            lift_rotate.setPower(-10);
+        
+        if (left > 0) {
+            lift_rotate.setPower(-left);
+        } else {
+            lift_rotate.setPower(0);
+        }
+    }
+    
+    void claw() {
+        double power = 1000;
+        if (gamepad1.x) {
+            telemetry.addData(" direct", "claw on");
+            // claw.setPower(power);
+        }
+        else{
+            // claw.setPower(0);
         }
     }
 
@@ -135,11 +159,11 @@ public class TriangleDrive extends OpMode {
     */
     
     void drive_lift() {
-        if (gamepad1.RB) {
+        if (gamepad1.right_bumper) {
             lift_0.setPosition(1);
             lift_1.setPosition(1);
         }
-        if (gamepad1.LB) {
+        if (gamepad1.left_bumper) {
             lift_0.setPosition(-1);
             lift_1.setPosition(-1);
         }
@@ -165,7 +189,7 @@ public class TriangleDrive extends OpMode {
 
         deploy_marker();
         rotate_lift();
-        drive_lift();
+        // drive_lift();
         // telemetry.addData("SERVO", deploy_servo.getPosition());
         telemetry.addData("Run Time", runtime.toString());
     }
