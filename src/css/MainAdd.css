@@ -448,3 +448,14 @@
 .downloadable:hover {
     text-decoration: underline;
 }
+
+.powerpoint2 {
+    background: #EEEEEE;
+    list-style-type: none;
+    -webkit-padding-start: 0;
+    list-style-position: inside;
+}
+
+.powerpoint:hover {
+    text-decoration: underline;
+}
