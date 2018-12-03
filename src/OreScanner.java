@@ -94,7 +94,7 @@ public class OreScanner extends OpMode {
         );
 
         if (is_gold) {
-            // telemetry.addData("\nGold Detected\n");
+           telemetry.addData("\nGold Detected\n");
         }
 
         // ----- SILVER -----
@@ -119,12 +119,12 @@ public class OreScanner extends OpMode {
         );
 
         if (is_silver) {
-            // telemetry.addData("\nSilver Detected\n");
+            telemetry.addData("\nSilver Detected\n");
         }
 
         // ----- END COLORS ----- 
 
-        // print_colors();
+        print_colors();
         telemetry.addData("Status", "Run Time: " + runtime.toString());
     }
 
