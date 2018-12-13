@@ -4,7 +4,7 @@
     # Written by Matthew Nappo        #
     # GitHub: @xoreo                  #
     #                                 #
-    # Class TriangleDrive             #
+    # Class NewSquareDrive            #
     # # # # # # # # # # # # # # # # # # 
 */
 
@@ -20,8 +20,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import java.lang.Math;
 
-@TeleOp(name="Main: Triangle Drive", group="Iterative Opmode")
-public class TriangleDrive extends OpMode {
+@TeleOp(name="Main: New Square Drive", group="Iterative Opmode")
+public class NewSquareDrive extends OpMode {
 
     String NAME_deploy_servo = "marker";
     String NAME_claw = "claw";
@@ -65,10 +65,10 @@ public class TriangleDrive extends OpMode {
         max_speed = 0.5;
         // max_speed = 0.125;
 
-        init_motor("w0");
-        init_motor("w1");
-        init_motor("w2");
-        init_motor("w3");
+        w0 = init_motor("w0");
+        w1 = init_motor("w1");
+        w2 = init_motor("w2");
+        w3 = init_motor("w3");
 
         deploy_servo = init_servo(NAME_deploy_servo);
         lift_rotate = init_motor(NAME_claw);
@@ -138,7 +138,7 @@ public class TriangleDrive extends OpMode {
     }
 
     void rotate_lift() {
-        telemetry.addData("pressed", gamepad1.pressed(gamepad1.right_trigger));
+        // telemetry.addData("pressed", gamepad1.pressed(gamepad1.right_trigger));
         telemetry.addData("direct", gamepad1.right_trigger);
         
         double right = gamepad1.right_trigger;
@@ -160,10 +160,10 @@ public class TriangleDrive extends OpMode {
         double power = 1000;
         if (gamepad1.x) {
             telemetry.addData("direct", "claw on");
-            claw.setPower(power);
+            claw.setPosition(1);
         }
         else{
-            claw.setPower(0);
+            claw.setPosition(0);
         }
     }
 
@@ -213,5 +213,6 @@ public class TriangleDrive extends OpMode {
         w0 = null;
         w1 = null;
         w2 = null;
+        w3 = null;
     }
 }
