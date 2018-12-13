@@ -25,9 +25,10 @@ public class NewSquareDrive extends OpMode {
 
     String NAME_deploy_servo = "marker";
     String NAME_claw = "claw";
-    String NAME_lift_rotate = "lift_rotate";
-    String NAME_lift_0 = "lift_0";
-    String NAME_lift_1 = "lift_1";
+    String NAME_lift_rotate = "claw_rotate";
+    String NAME_lift_0 = "drive_claw_left";
+    String NAME_lift_1 = "drive_claw_right";
+    String NAME_lock_arm = "arm_lock";
 
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor w0 = null;
@@ -41,6 +42,7 @@ public class NewSquareDrive extends OpMode {
     
     private Servo deploy_servo = null;
     private Servo claw = null;
+    private Servo lock_arm = null;
     
     private double max_speed;
 
@@ -62,8 +64,8 @@ public class NewSquareDrive extends OpMode {
     @Override
     public void init() {
         // max_speed = 1;
-        max_speed = 0.5;
-        // max_speed = 0.125;
+        // max_speed = 0.5;
+        max_speed = 0.125;
 
         w0 = init_motor("w0");
         w1 = init_motor("w1");
@@ -71,10 +73,11 @@ public class NewSquareDrive extends OpMode {
         w3 = init_motor("w3");
 
         deploy_servo = init_servo(NAME_deploy_servo);
-        lift_rotate = init_motor(NAME_claw);
+        lift_rotate = init_motor(NAME_lift_rotate);
         claw = init_servo(NAME_claw);
         lift_0 = init_servo(NAME_lift_0);
         lift_1 = init_servo(NAME_lift_1);
+        lock_arm = init_servo(NAME_lock_arm);
     }
 
     double[] move() {
@@ -126,17 +129,58 @@ public class NewSquareDrive extends OpMode {
 
         return speed;
     }
-
+    
+    boolean marker_bool = false;
     void deploy_marker() {
         double current_position = deploy_servo.getPosition();
-        if (gamepad1.b) {
-            deploy_servo.setPosition(1);
-        }
-        if (gamepad1.a) {
-            deploy_servo.setPosition(-1);
+        if (gamepad1.y) {
+            if (marker_bool == true) {
+                if (current_position == 1) {
+                    deploy_servo.setPosition(-1);
+                }
+                marker_bool = false;
+            } else if (marker_bool == false) {
+                if (current_position == -1) {
+                    deploy_servo.setPosition(1);
+                }
+                marker_bool = true;
+            }
+            
         }
     }
+    
 
+    // I DONT EVEN NEED THIS FUNCTION, IT WILL HAPPEN AT THE START OF EVERYTHING, INCLUDING AUTONOMOUS
+    boolean arm_func_bool = false;
+    void lock_arm_func() {
+        double current_position = lock_arm.getPosition();
+        telemetry.addData("ARM LOCK POSITION", current_position);
+        if (gamepad1.x) {
+            if (arm_func_bool == true) {
+                if (current_position == 1) {
+                    lock_arm.setPosition(-1);
+                }
+                arm_func_bool = false;
+            } else if (arm_func_bool == false) {
+                if (current_position == 0) {
+                    lock_arm.setPosition(1);
+                }
+                arm_func_bool = true;
+            }
+            
+        }
+    }
+    
+    void move_claw() {
+        double current_position = claw.getPosition();
+        if (gamepad1.b) {
+            claw.setPosition(1);
+        }
+        if (gamepad1.a) {
+            claw.setPosition(-1);
+        }
+    }
+    
     void rotate_lift() {
         // telemetry.addData("pressed", gamepad1.pressed(gamepad1.right_trigger));
         telemetry.addData("direct", gamepad1.right_trigger);
@@ -155,23 +199,13 @@ public class NewSquareDrive extends OpMode {
             lift_rotate.setPower(0);
         }
     }
-    
-    void claw() {
-        double power = 1000;
-        if (gamepad1.x) {
-            telemetry.addData("direct", "claw on");
-            claw.setPosition(1);
-        }
-        else{
-            claw.setPosition(0);
-        }
-    }
 
-    /*
-        For driving the lift, I need to find out a way to do this. Maybe i wire the motor into the servo port but deal with it 
-        as if its a dcmotor class
-    */
-    
+            /*
+                For driving the lift, I need to find out a way to do this. Maybe i wire the motor into the servo port but deal with it 
+                as if its a dcmotor class
+            */
+
+            
     void drive_lift() {
         if (gamepad1.right_bumper) {
             lift_0.setPosition(1);
@@ -190,6 +224,7 @@ public class NewSquareDrive extends OpMode {
     @Override
     public void start() {
         deploy_servo.setPosition(0);
+        lock_arm.setPosition(0);
         runtime.reset();
     }
 
@@ -200,9 +235,13 @@ public class NewSquareDrive extends OpMode {
         w0.setPower(move[0] + turn);
         w1.setPower(move[1] + turn);
         w2.setPower(move[2] + turn);
+        w3.setPower(move[3] + turn);
 
         deploy_marker();
         rotate_lift();
+        move_claw();
+        lock_arm_func();
+
         // drive_lift();
         telemetry.addData("SERVO", deploy_servo.getPosition());
         telemetry.addData("Run Time", runtime.toString());
