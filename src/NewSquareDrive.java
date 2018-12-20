@@ -11,6 +11,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorController;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -37,8 +38,8 @@ public class NewSquareDrive extends OpMode {
     private DcMotor w3 = null;
 
     private DcMotor lift_rotate = null;
-    private Servo lift_0 = null;
-    private Servo lift_1 = null;
+    private CRServo lift_0 = null;
+    private CRServo lift_1 = null;
     
     private Servo deploy_servo = null;
     private Servo claw = null;
@@ -60,12 +61,19 @@ public class NewSquareDrive extends OpMode {
         s.setDirection(Servo.Direction.FORWARD);
         return s;
     }
+    
+     private CRServo init_CRservo(String id) {
+        CRServo s = null;
+        s = hardwareMap.get(CRServo.class, id);
+        // s.setDirection(CRServo.Direction.FORWARD);
+        return s;
+    }
 
     @Override
     public void init() {
         // max_speed = 1;
-        // max_speed = 0.5;
-        max_speed = 0.125;
+        max_speed = 0.3;
+        // max_speed = 0.125;
 
         w0 = init_motor("w0");
         w1 = init_motor("w1");
@@ -75,8 +83,10 @@ public class NewSquareDrive extends OpMode {
         deploy_servo = init_servo(NAME_deploy_servo);
         lift_rotate = init_motor(NAME_lift_rotate);
         claw = init_servo(NAME_claw);
-        lift_0 = init_servo(NAME_lift_0);
-        lift_1 = init_servo(NAME_lift_1);
+        lift_0 = init_CRservo(NAME_lift_0);
+        lift_1 = init_CRservo(NAME_lift_1);
+        // lift_0=hardwareMap.servo.get(NAME_lift_0);
+        // lift_0=hardwareMap.servo.get(NAME_lift_1);
         lock_arm = init_servo(NAME_lock_arm);
     }
 
@@ -103,10 +113,10 @@ public class NewSquareDrive extends OpMode {
         double theta_3 = alpha_3 - phi_joy;
         double theta_4 = alpha_4 - phi_joy;
         
-        double w0_power = speed * Math.sin(theta_1);
-        double w1_power = speed * Math.sin(theta_2);
-        double w2_power = speed * Math.sin(theta_3);
-        double w3_power = speed * Math.sin(theta_4);
+        double w0_power = -speed * Math.sin(theta_1);
+        double w1_power = -speed * Math.sin(theta_2);
+        double w2_power = -speed * Math.sin(theta_3);
+        double w3_power = -speed * Math.sin(theta_4);
         
         telemetry.addData("w0_power", w0_power);
         telemetry.addData("w1_power", w1_power);
@@ -127,7 +137,7 @@ public class NewSquareDrive extends OpMode {
         double x_right_joy = gamepad1.right_stick_x;
         double speed = Range.clip(x_right_joy, -1.0, 1.0) * max_speed;
 
-        return speed;
+        return -speed;
     }
     
     boolean marker_bool = false;
@@ -135,12 +145,12 @@ public class NewSquareDrive extends OpMode {
         double current_position = deploy_servo.getPosition();
         if (gamepad1.y) {
             if (marker_bool == true) {
-                if (current_position == 1) {
+                if (current_position >= 0) {
                     deploy_servo.setPosition(-1);
                 }
                 marker_bool = false;
             } else if (marker_bool == false) {
-                if (current_position == -1) {
+                if (current_position <= 0) {
                     deploy_servo.setPosition(1);
                 }
                 marker_bool = true;
@@ -148,21 +158,20 @@ public class NewSquareDrive extends OpMode {
             
         }
     }
-    
 
-    // I DONT EVEN NEED THIS FUNCTION, IT WILL HAPPEN AT THE START OF EVERYTHING, INCLUDING AUTONOMOUS
     boolean arm_func_bool = false;
     void lock_arm_func() {
         double current_position = lock_arm.getPosition();
         telemetry.addData("ARM LOCK POSITION", current_position);
         if (gamepad1.x) {
+            telemetry.addData("x button", "pressed");
             if (arm_func_bool == true) {
-                if (current_position == 1) {
-                    lock_arm.setPosition(-1);
+                if (current_position == 1.0) {
+                    lock_arm.setPosition(0);
                 }
                 arm_func_bool = false;
             } else if (arm_func_bool == false) {
-                if (current_position == 0) {
+                if (current_position == 0.0) {
                     lock_arm.setPosition(1);
                 }
                 arm_func_bool = true;
@@ -170,7 +179,7 @@ public class NewSquareDrive extends OpMode {
             
         }
     }
-    
+
     void move_claw() {
         double current_position = claw.getPosition();
         if (gamepad1.b) {
@@ -180,13 +189,13 @@ public class NewSquareDrive extends OpMode {
             claw.setPosition(-1);
         }
     }
-    
+
     void rotate_lift() {
         // telemetry.addData("pressed", gamepad1.pressed(gamepad1.right_trigger));
         telemetry.addData("direct", gamepad1.right_trigger);
         
-        double right = gamepad1.right_trigger;
-        double left = gamepad1.left_trigger;
+        double right = gamepad1.right_trigger * (0.5);
+        double left = gamepad1.left_trigger * (0.5);
         if (right > 0) {
             lift_rotate.setPower(right);
         } else {
@@ -204,18 +213,18 @@ public class NewSquareDrive extends OpMode {
                 For driving the lift, I need to find out a way to do this. Maybe i wire the motor into the servo port but deal with it 
                 as if its a dcmotor class
             */
-
             
-    void drive_lift() {
-        if (gamepad1.right_bumper) {
-            lift_0.setPosition(1);
-            lift_1.setPosition(1);
-        }
-        if (gamepad1.left_bumper) {
-            lift_0.setPosition(-1);
-            lift_1.setPosition(-1);
-        }
-    }
+            void drive_lift() {
+                if (gamepad1.right_bumper) {
+                    lift_0.setPower(1);
+                    lift_1.setPower(1);
+                    telemetry.addData("yay", "yay");
+                }
+                if (gamepad1.left_bumper) {
+                     lift_0.setPower(-1);
+                    lift_1.setPower(-1);
+                }
+            }
 
     @Override
     public void init_loop() {
@@ -223,13 +232,16 @@ public class NewSquareDrive extends OpMode {
 
     @Override
     public void start() {
-        deploy_servo.setPosition(0);
+        // deploy_servo.setPosition(0);
         lock_arm.setPosition(0);
+        
         runtime.reset();
+        init();
     }
 
     @Override
     public void loop() {
+        telemetry.addData("MOTORRRR", deploy_servo.getPosition());
         double[] move = move();
         double turn = turn();
         w0.setPower(move[0] + turn);
@@ -240,9 +252,8 @@ public class NewSquareDrive extends OpMode {
         deploy_marker();
         rotate_lift();
         move_claw();
-        lock_arm_func();
 
-        // drive_lift();
+        drive_lift();
         telemetry.addData("SERVO", deploy_servo.getPosition());
         telemetry.addData("Run Time", runtime.toString());
     }
