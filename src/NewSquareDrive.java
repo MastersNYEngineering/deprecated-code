@@ -82,6 +82,8 @@ public class NewSquareDrive extends OpMode {
 
         deploy_servo = init_servo(NAME_deploy_servo);
         lift_rotate = init_motor(NAME_lift_rotate);
+        lift_rotate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        // Start running to position instead
         claw = init_servo(NAME_claw);
         lift_0 = init_CRservo(NAME_lift_0);
         lift_1 = init_CRservo(NAME_lift_1);
