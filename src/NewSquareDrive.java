@@ -43,9 +43,6 @@ public class NewSquareDrive extends OpMode {
     private DcMotor lift_rotate_top = null;
     private CRServo lift_0 = null;
     private CRServo lift_1 = null;
-
-    private Servo s_lift_0 = null;
-    private Servo s_lift_1 = null;
     
     private Servo deploy_servo = null;
     private Servo claw = null;
@@ -253,7 +250,7 @@ public class NewSquareDrive extends OpMode {
                     lift_0.setPower(-0.025);
                     lift_1.setPower(-0.025);
                 }
-                }
+            }
             
 
     @Override
@@ -268,7 +265,7 @@ public class NewSquareDrive extends OpMode {
         runtime.reset();
         init();
     }
-
+    
     @Override
     public void loop() {
         telemetry.addData("MOTORRRR", deploy_servo.getPosition());
@@ -288,7 +285,7 @@ public class NewSquareDrive extends OpMode {
         telemetry.addData("SERVO", deploy_servo.getPosition());
         telemetry.addData("Run Time", runtime.toString());
     }
-
+    
     @Override
     public void stop() {
         w0 = null;
