@@ -1,3 +1,15 @@
+/*
+    1. Unlock latch
+    2. Rotate lift to lower bar
+    3. Extend lift
+    4. Unhook by driving right
+    5. Retract arm
+    6. Bring arm back down
+    7. (other stuff)
+*/
+
+
+
 /* Copyright (c) 2017 FIRST. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification,
