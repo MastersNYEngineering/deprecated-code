@@ -11,8 +11,14 @@ public class Robot {
     private DcMotor liftRotateTop    = null;
     private CRServo liftServoRight   = null;
     private CRServo liftServoLeft    = null;
+    
+    // Declare some other stuff
+    private double      maxSpeed    = 0.3;
+    private HardwareMap hardwareMap = null;
 
-    double maxSpeed = 0.3;
+    Robot(HardwareMap hardwareMap) {
+        this.hardwareMap = hardwareMap;
+    }
 
     // InitDcMotor - Initialize a DcMotor
     private DcMotor InitDcMotor(String id) {
@@ -90,5 +96,6 @@ public class Robot {
         return -speed;
     }
 
+    
 
 }
