@@ -44,7 +44,7 @@ public class Robot {
         return s;
     }
 
-    // GetDriveSpeeds - Calculate the necessary speed for each motor to drive
+    // GetDriveSpeeds - Calculate the necessary speed for each motor to drive (based off of joysticks)
     public double[] GetDriveSpeeds() {
         double x_left_joy = gamepad1.left_stick_x;
         double y_left_joy = gamepad1.left_stick_y;
@@ -88,14 +88,12 @@ public class Robot {
         return speeds;
     }
 
-    // GetTurnSpeed - Get the necessary speed of the motor to turn
+    // GetTurnSpeed - Get the necessary speed of the motor to turn (based off of joysticks)
     public double GetTurnSpeed() {
         double x_right_joy = gamepad1.right_stick_x;
         double speed = Range.clip(x_right_joy, -1.0, 1.0) * this.maxSpeed;
 
         return -speed;
     }
-
-    
 
 }
